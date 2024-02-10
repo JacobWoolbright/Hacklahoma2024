@@ -5,14 +5,14 @@ import java.util.UUID;
 
 public class IdGenerator {
 
-    private static ArrayList<UUID> ids = new ArrayList<>();
+    private static ArrayList<UUID> sessionIds = new ArrayList<>();
 
-    public static UUID generateId() {
+    public static UUID generateSessionId() {
         UUID id = UUID.randomUUID();
-        while (ids.contains(id)) {
+        while (sessionIds.contains(id)) {
             id = UUID.randomUUID();
         }
-        ids.add(id);
+        sessionIds.add(id);
         return id;
     }
 

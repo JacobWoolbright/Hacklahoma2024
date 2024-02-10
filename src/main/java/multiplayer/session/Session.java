@@ -9,9 +9,6 @@ public class Session {
     final UUID id;
 
     public Session() {
-        id = IdGenerator.generateId();
+        id = IdGenerator.generateSessionId();
     }
-
-
-
 }
