@@ -2,9 +2,61 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Titles</title>
+    <title>Name</title>
+
+    <!-- Load TensorFlow.js -->
+    <script src="https://unpkg.com/@tensorflow/tfjs"></script>
+    <!-- Load Posenet -->
+    <script src="https://unpkg.com/@tensorflow-models/posenet">
+    </script>
+    <script type="text/javascript">
+        posenet.load().then(function(net) {
+            // posenet model loaded
+        });
+    </script>
+
+    <script src="camera.js"></script>
+
 </head>
 <body>
+
+    <video id="myVidPlayer" controls muted autoplay></video>
+
+    <script type="text/javascript">
+
+        loadModel();
+
+        //Selector for your <video> element
+        const video = document.querySelector('#myVidPlayer');
+
+        //Core
+        window.navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+                video.onloadedmetadata = (e) => {
+                    video.play();
+                };
+            })
+            .catch( () => {
+                alert('You have give browser the permission to run Webcam and mic ;( ');
+            });
+
+    </script>
+
+    <script>
+
+        loadModel();
+
+
+        // Wait for 10 seconds before starting the interval
+        setTimeout(function() {
+            // Call readPose every 5 seconds
+            setInterval(function() {
+                readPose(document.getElementById("myVidPlayer"));
+            }, 50);
+        }, 10000);
+
+    </script>
 
 </body>
 </html>
