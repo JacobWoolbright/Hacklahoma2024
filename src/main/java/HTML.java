@@ -14,15 +14,14 @@ public class HTML implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
 
-        System.out.println("remote address: " + exchange.getRemoteAddress());
-        System.out.println("Request URI: " + exchange.getRequestURI());
+        String filename = exchange.getRequestURI().toString().substring(1);
 
         logger.info("dispatching dynamic to " + exchange.getRemoteAddress());
 
         StringBuilder sb = new StringBuilder();
 
         try{
-            String content = new String(Files.readAllBytes(Paths.get("./src/main/java/jacob.html")));
+            String content = new String(Files.readAllBytes(Paths.get("./html/" + filename)));
             sb.append(content);
         }
         catch (Exception e){
