@@ -1,11 +1,18 @@
 const backgroundColor = '#000000';
 const foregroundColor = '#FFFFFF';
 
+import(Paddle.js);
+import(Ball.js);
+import(Score.js);
+import(Names.js);
+
+
 
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
-drawScene = function() {
+
+let drawScene = function() {
     renderBackground();
     renderBall();
     renderPaddles();
@@ -14,12 +21,12 @@ drawScene = function() {
     renderMiddleLine();
 }
 
-renderBackground = function() {
+let renderBackground = function() {
     ctx.fillStyle = backgroundColor;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-renderMiddleLine = function() {
+let renderMiddleLine = function() {
     ctx.beginPath();
     ctx.setLineDash([10, 10]);
     ctx.moveTo(canvas.width / 2, 0);
@@ -28,11 +35,11 @@ renderMiddleLine = function() {
     ctx.stroke();
 }
 
-getForegroundColor = function() {
+let getForegroundColor = function() {
     return foregroundColor;
 }
 
-getBackgroundColor = function() {
+let getBackgroundColor = function() {
     return backgroundColor;
 }
 

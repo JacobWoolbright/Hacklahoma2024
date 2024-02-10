@@ -8,7 +8,7 @@ const Ball = new Path2D();
 
 
 
-renderBall = function() {
+let renderBall = function() {
     ctx.fillStyle = BallColor;
     ctx.fillrect(BallPos.X, BallPos.Y, BallSize, BallSize);
     ctx.fill(Ball);

@@ -14,14 +14,18 @@ const paddleColor = getForegroundColor(); // paddle color
 let posY = 0; // height from top
 
 paddle = new Path2D(); // paddle path
-if (playerOne) {
-    paddle.rect(paddleLeft, paddlePos, paddleWidth, paddleLength);
-}
-else {
-    paddle.rect(paddleRight, paddlePos, paddleWidth, paddleLength);
+let Paddle = function () {
+    if (playerOne) {
+        paddle.rect(paddleLeft, paddlePos, paddleWidth, paddleLength);
+    }
+    else {
+        paddle.rect(paddleRight, paddlePos, paddleWidth, paddleLength);
+
+    }
 }
 
-paddleMove = function() { // moves the paddle
+
+let paddleMove = function() { // moves the paddle
 
     paddlePos = posY - paddleLength / 2;
 
@@ -33,7 +37,7 @@ paddleMove = function() { // moves the paddle
     }
 }
 
-renderPaddle = function() {
+let renderPaddle = function() {
     ctx.fillStyle = paddleColor;
     ctx.fill(paddle);
 }
