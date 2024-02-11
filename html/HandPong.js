@@ -166,8 +166,8 @@ function respawnBall() {
     //spawns ball at random y position with random x direction and random y direction at an angle between 30 and 150 degrees with a speed between 1/600 and 1/400 of the canvas height
     ball.x = canvasWidth / 2;
     ball.y = Math.random() * canvasHeight;
-    ball.dx = Math.random() / 400 * canvasWidth * (Math.random() < 0.5 ? 1 : -1);
-    ball.dy = Math.random() / 300 * canvasHeight * (Math.random() < 0.5 ? 1 : -1);
+    ball.dx = Math.random() / 200 * canvasWidth * (Math.random() < 0.5 ? 1 : -1);
+    ball.dy = Math.random() / 150 * canvasHeight * (Math.random() < 0.5 ? 1 : -1);
 
     if(Math.abs(ball.dx) < 2 || Math.abs(ball.dx) > 3){
         respawnBall();
