@@ -11,6 +11,9 @@ public class Game {
     private String gameShareCode;
     private final UUID gameId;
     private Player[] players = new Player[2];
+    private int ballX = 0, ballY = 0;
+    private int dx, dy;
+    private boolean gameStarted = false;
 
     public Game() {
 
@@ -45,5 +48,45 @@ public class Game {
 
     public boolean isPrimaryPlayer(Player player) {
         return players[0].equals(player);
+    }
+
+    public int getBallX() {
+        return ballX;
+    }
+
+    public void setBallX(int ballX) {
+        this.ballX = ballX;
+    }
+
+    public int getBallY() {
+        return ballY;
+    }
+
+    public void setBallY(int ballY) {
+        this.ballY = ballY;
+    }
+
+    public int getDx() {
+        return dx;
+    }
+
+    public void setDx(int dx) {
+        this.dx = dx;
+    }
+
+    public int getDy() {
+        return dy;
+    }
+
+    public void setDy(int dy) {
+        this.dy = dy;
+    }
+
+    public boolean isGameStarted() {
+        return gameStarted;
+    }
+
+    public void setGameStarted(boolean gameStarted) {
+        this.gameStarted = gameStarted;
     }
 }

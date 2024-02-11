@@ -11,6 +11,8 @@ public class Player {
     private String userName;
     private final Game game;
 
+    private int paddleY;
+
     public Player(Game game) {
         playerID = IdGenerator.generatePlayerId();
         this.game = game;
@@ -32,5 +34,13 @@ public class Player {
 
     public boolean isPrimaryPlayer() {
         return game.isPrimaryPlayer(this);
+    }
+
+    public int getPaddleY() {
+        return paddleY;
+    }
+
+    public void setPaddleY(int paddleY) {
+        this.paddleY = paddleY;
     }
 }

@@ -7,6 +7,7 @@ import game.player.PlayerManager;
 import game.session.Game;
 import game.session.GameManager;
 import org.json.JSONObject;
+import utils.JsonHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,7 +23,7 @@ public class GameTick implements HttpHandler {
 
         logger.info("dispatching GameTick to " + exchange.getRemoteAddress());
 
-        StringBuilder sb = new StringBuilder();
+        StringBuilder outputSb = new StringBuilder();
 
         Game game = GameManager.getGameFromShareCode(exchange.getRequestURI().toString().split("/")[3]);
         Player player = PlayerManager.getPlayer(exchange.getRequestURI().toString().split("/")[4]);
@@ -38,10 +39,31 @@ public class GameTick implements HttpHandler {
         JSONObject inputJson = new JSONObject(InputSb.toString());
 
         if(player.isPrimaryPlayer()){
+            game.setBallX(inputJson.getInt("ballX"));
+            game.setBallY(inputJson.getInt("ballY"));
+            game.setDx(inputJson.getInt("dx"));
+            game.setDy(inputJson.getInt("dy"));
+            player.setPaddleY(inputJson.getInt("paddleY"));
 
+            if(inputJson.has("gameStarted")){
+                game.setGameStarted(inputJson.getBoolean("gameStarted"));
+            }
+
+            outputSb.append("{");
+            outputSb.append(JsonHelper.append("paddleY", game.getPlayers()[1].getPaddleY()));
+            outputSb.append("}");
         }
         else{
+            player.setPaddleY(inputJson.getInt("paddleY"));
 
+            outputSb.append("{");
+            outputSb.append(JsonHelper.append("paddleY", game.getPlayers()[0].getPaddleY()));
+            outputSb.append(JsonHelper.append("ballX", game.getBallX()));
+            outputSb.append(JsonHelper.append("ballY", game.getBallY()));
+            outputSb.append(JsonHelper.append("dx", game.getDx()));
+            outputSb.append(JsonHelper.append("dy", game.getDy()));
+            outputSb.append(JsonHelper.append("gameStarted", game.isGameStarted()));
+            outputSb.append("}");
         }
 
         if(game == null || game.getPlayers()[1] != null){
@@ -54,12 +76,7 @@ public class GameTick implements HttpHandler {
             return;
         }
 
-        sb.append("{");
-        sb.append("\"gameId\":\"" + game.getGameId() + "\",");
-        sb.append("\"playerId\":\"" + game.getPlayers()[1].getPlayerID() + "\"");
-        sb.append("}");
-
-        String response = sb.toString();
+        String response = outputSb.toString();
 
         // send file to user
         exchange.sendResponseHeaders(200, response.length());
