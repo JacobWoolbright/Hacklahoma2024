@@ -7,7 +7,9 @@ setInterval(function() {
             "ballY": ball.y/canvasHeight,
             "dx": ball.dx/canvasWidth,
             "dy": ball.dy/canvasHeight,
-            "paddleY": player1.y/canvasHeight
+            "paddleY": player1.y/canvasHeight,
+            "primaryPlayerScore": player1.wins,
+            "secondaryPlayerScore": player2.wins
         };
 
         fetch(`/api/gameTick/${playerID}`, {
@@ -46,6 +48,8 @@ setInterval(function() {
                 ball.y = data.ballY*canvasHeight;
                 ball.dx = data.dx*canvasWidth
                 ball.dy = data.dy*canvasHeight;
+                player1.setWins(data.secondaryPlayerScore);
+                player2.setWins(data.primaryPlayerScore);
                 console.log("Ball x: " + data.ballX*canvasWidth);
                 console.log("Ball y: " + data.ballY*canvasHeight);
                 gameStarted = data.gameStarted;
