@@ -21,6 +21,8 @@ async function readPose(imageElement) {
     const poses = await net.estimateMultiplePoses(
         imageElement, imageScaleFactor, flipHorizontal, outputStride,
         maxPoseDetections, scoreThreshold, nmsRadius);
-    console.log("estimating pose done");
-    console.log(poses);
+
+    pose = poses[0];
+
+    console.log(pose)
 }
