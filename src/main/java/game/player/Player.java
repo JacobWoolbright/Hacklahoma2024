@@ -16,6 +16,7 @@ public class Player {
     public Player(Game game) {
         playerID = IdGenerator.generatePlayerId();
         this.game = game;
+        paddleY = 0;
 
         PlayerManager.addPlayer(this);
     }
