@@ -4,6 +4,7 @@ import com.sun.net.httpserver.HttpServer;
 import web.sites.api.Api;
 import web.sites.Html;
 import web.sites.api.CreateGame;
+import web.sites.api.GetGameShareCode;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -24,6 +25,7 @@ public class WebServerManager {
 //        add api context
         server.createContext("/api", new Api());
         server.createContext("/api/createGame", new CreateGame());
+        server.createContext("/api/getGameShareCode/", new GetGameShareCode());
 
 
         server.start();
