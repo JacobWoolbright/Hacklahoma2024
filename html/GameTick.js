@@ -42,10 +42,10 @@ setInterval(function() {
             .then(data => {
                 console.log('Success:', data);
                 player2.relativeY = data.paddleY;
-                ball.x = data.ballX;
-                ball.y = data.ballY;
-                ball.dx = data.dx;
-                ball.dy = data.dy;
+                ball.x = data.ballX*canvasWidth;
+                ball.y = data.ballY*canvasHeight;
+                ball.dx = data.dx*canvasWidth
+                ball.dy = data.dy*canvasHeight;
                 gameStarted = data.gameStarted;
             })
             .catch((error) => {
