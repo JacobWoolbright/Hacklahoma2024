@@ -1,31 +1,34 @@
+package web.sites.api;
+
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import game.session.Game;
+import game.session.GameManager;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.logging.Logger;
 
-public class HTML implements HttpHandler {
+public class GetGameShareCode implements HttpHandler {
 
-    Logger logger = Logger.getLogger("dynamicSite");
+    Logger logger = Logger.getLogger("GetGameShareCode");
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
 
-        String filename = exchange.getRequestURI().toString().substring(1);
-
-        logger.info("dispatching dynamic to " + exchange.getRemoteAddress());
+        logger.info("dispatching GetGameShareCode to " + exchange.getRemoteAddress());
 
         StringBuilder sb = new StringBuilder();
 
-        try{
-            String content = new String(Files.readAllBytes(Paths.get("./html/" + filename)));
-            sb.append(content);
+        String gameid = exchange.getRequestURI().toString().substring(22);
+
+        Game game = GameManager.getGame(gameid);
+
+        if(game == null){
+            sb.append("none");
         }
-        catch (Exception e){
-            e.printStackTrace();
+        else{
+            sb.append(game.getGameShareCode());
         }
 
         String response = sb.toString();
