@@ -55,7 +55,7 @@ public class GameTick implements HttpHandler {
             outputSb.append("{");
 
             if (game.getPlayers()[1] != null) {
-                outputSb.append(JsonHelper.append("paddleY", game.getPlayers()[1].getPaddleY()).replace(",", ""));
+                outputSb.append(JsonHelper.append("paddleY", game.getPlayers()[1].getPaddleY()));
             }
 
             outputSb.append("}");
@@ -66,10 +66,15 @@ public class GameTick implements HttpHandler {
 
             outputSb.append("{");
             outputSb.append(JsonHelper.append("paddleY", game.getPlayers()[0].getPaddleY()));
+            outputSb.append(",");
             outputSb.append(JsonHelper.append("ballX", game.getBallX()));
+            outputSb.append(",");
             outputSb.append(JsonHelper.append("ballY", game.getBallY()));
+            outputSb.append(",");
             outputSb.append(JsonHelper.append("dx", game.getDx()));
+            outputSb.append(",");
             outputSb.append(JsonHelper.append("dy", game.getDy()));
+            outputSb.append(",");
             outputSb.append(JsonHelper.append("gameStarted", game.isGameStarted()));
             outputSb.append("}");
         }
