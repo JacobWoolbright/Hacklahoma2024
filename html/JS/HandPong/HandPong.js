@@ -5,39 +5,77 @@ const ctx = canvas.getContext("2d");
 let canvasWidth = canvas.width;
 let canvasHeight = canvas.height;
 const roundsToWin = 7;
-let mouseY = 0;
 
-let player1 = {
-    x : 0,
-    y : canvasHeight / 2 - 100,
-    width : 0.15 * canvasHeight,
-    height: 0.15 * canvasHeight,
-    wins : 0,
-    name : "Player",
-    integral: 0,
-    prevError: 0,
-    primary : true
+class player {
+    get name() {
+        return this._name;
+    }
+
+    set name(value) {
+        this._name = value;
+    }
+
+
+    get y() {
+        return this._y;
+    }
+
+    set y(value) {
+        this._y = value;
+    }
+
+    get wins() {
+        return this._wins;
+    }
+
+    set wins(value) {
+        this._wins = value;
+    }
+
+    get primary() {
+        return this._primary;
+    }
+
+    get relativeY() {
+        return this._relativeY;
+    }
+
+    set relativeY(value) {
+        this._relativeY = value;
+    }
+    constructor(name, x, y, width, height, wins, integral, prevError, primary, relativeY) {
+        this.width = width;
+        this.height = height;
+        this.integral = integral;
+        this.prevError = prevError;
+        this._name = name;
+        this.x = x;
+        this._y = y;
+        this._wins = wins;
+        this._primary = primary;
+        this._relativeY = relativeY;
+    }
+
 }
-let player2 = {
-    x: 0,
-    y: canvasHeight / 2 - 100,
-    width: 0.15 * canvasHeight,
-    height: 0.15 * canvasHeight,
-    wins: 0,
-    name: "Player",
-    integral: 0,
-    prevError: 0,
-    primary: false
-};
 
+player1 = new player("Player 1", .0125 * canvasWidth, canvasHeight / 2 - 100, 0.015 * canvasHeight, 0.15 * canvasHeight, 0, 0, 0, true, 0);
+player2 = new player("Player 2", canvasWidth - .0125 * canvasWidth, canvasHeight / 2 - 100, 0.015 * canvasHeight, 0.15 * canvasHeight, 0, 0, 0, false, 0);
 // Ball
 let ball = {
     x: canvasWidth / 2,
     y: canvasHeight / 2,
     radius: canvasWidth / 100,
-    dx: 2,
-    dy: 2
+    dx: 2 / canvasWidth,
+    dy: 2 / canvasHeight
+
 };
+
+function reset(){
+    player1.score = 0;
+    player2.score = 0;
+
+}
+
 
 
 // PID controller constants
@@ -46,45 +84,22 @@ let Ki = 0.00;
 let Kd = 0.05;
 
 
-function reset(){
-    player1.score = 0;
-    player2.score = 0;
-
-}
-
-function updatePlayer(targetY, currentY, player) {
-    let error = targetY - currentY;
+// PID controller that outputs the relative Y position of the paddle with the location input between 0 and 1
+function updatePlayer(location, y, player) {
+    location *= canvasHeight;
+    let error = location - y;
     player.integral += error;
     let derivative = error - player.prevError;
     player.prevError = error;
-
     return Kp * error + Ki * player.integral + Kd * derivative;
-
 }
 
-// Mouse move event listener
-canvas.addEventListener("mousemove", function(event) {
-    let rect = canvas.getBoundingClientRect();
-    let mousey = event.clientY - rect.top;
-    player1.y = mousey - player1.height / 2;
-    player2.y = mousey - player2.height / 2;
-    mouseY = mousey;
-})
-
-// Game loop
-
-player1.name = "Player 1";
-player1.x = .0125 * canvasWidth;
-
-player2.name = "Player 2";
-player2.x = canvasWidth - player2.width - .0125 * canvasWidth;
 
 function gameLoop() {
-
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
-    player1.y += updatePlayer(mouseY, player1.y,player1);
-    player2.y += updatePlayer(mouseY, player2.y,player2);
+    player1.y += updatePlayer(player1.relativeY, player1.y,player1);
+    player2.y += updatePlayer(player2.relativeY, player2.y,player2);
 
     // Ensure paddle stays within canvas boundaries
     if (player1.y < 0) {
@@ -176,6 +191,11 @@ function gameLoop() {
             alert("Player 2 wins!");
             reset();
         }
+
+// Call the gameLoop function again
+    requestAnimationFrame(gameLoop);
+
+
 }
 
 
