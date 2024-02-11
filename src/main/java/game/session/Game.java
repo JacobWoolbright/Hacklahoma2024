@@ -34,4 +34,12 @@ public class Game {
     public Player[] getPlayers() {
         return players;
     }
+
+    public boolean addPlayer(Player player) {
+        if(players[1] == null) {
+            players[1] = player;
+            return true;
+        }
+        return false;
+    }
 }

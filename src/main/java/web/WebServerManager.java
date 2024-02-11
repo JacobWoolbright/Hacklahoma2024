@@ -26,6 +26,7 @@ public class WebServerManager {
         server.createContext("/api", new Api());
         server.createContext("/api/createGame", new CreateGame());
         server.createContext("/api/getGameShareCode/", new GetGameShareCode());
+        server.createContext("/api/joinGame/", new web.sites.api.JoinGame());
 
 
         server.start();
