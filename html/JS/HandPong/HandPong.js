@@ -7,7 +7,7 @@ let canvasHeight = canvas.height;
 const roundsToWin = 7;
 let mouseY = 0;
 
-var player = {
+let player1 = {
     x : 0,
     y : canvasHeight / 2 - 100,
     width : 0.15 * canvasHeight,
@@ -18,6 +18,17 @@ var player = {
     prevError: 0,
     primary : true
 }
+let player2 = {
+    x: 0,
+    y: canvasHeight / 2 - 100,
+    width: 0.15 * canvasHeight,
+    height: 0.15 * canvasHeight,
+    wins: 0,
+    name: "Player",
+    integral: 0,
+    prevError: 0,
+    primary: false
+};
 
 // Ball
 let ball = {
@@ -54,21 +65,17 @@ function updatePlayer(targetY, currentY, player) {
 // Mouse move event listener
 canvas.addEventListener("mousemove", function(event) {
     let rect = canvas.getBoundingClientRect();
-    var mouseY = event.clientY - rect.top;
-    player1.y = mouseY - player1.height / 2;
-    player2.y = mouseY - player2.height / 2;
-    moyseY = mouseY;
-});
+    let mousey = event.clientY - rect.top;
+    player1.y = mousey - player1.height / 2;
+    player2.y = mousey - player2.height / 2;
+    mouseY = mousey;
+})
 
 // Game loop
 
-let player1 = new Player();
 player1.name = "Player 1";
 player1.x = .0125 * canvasWidth;
-player1.primary = true;
 
-
-let player2 = new Player();
 player2.name = "Player 2";
 player2.x = canvasWidth - player2.width - .0125 * canvasWidth;
 
@@ -76,8 +83,8 @@ function gameLoop() {
 
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
-    player1.y += updatePlayer(mouseY, player.y,player1);
-    player2.y += updatePlayer(mouseY, player.y,player2);
+    player1.y += updatePlayer(mouseY, player1.y,player1);
+    player2.y += updatePlayer(mouseY, player2.y,player2);
 
     // Ensure paddle stays within canvas boundaries
     if (player1.y < 0) {
