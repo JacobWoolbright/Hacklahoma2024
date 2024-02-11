@@ -58,7 +58,6 @@ class player {
 
 }
 
-
 player1 = new player("Player 1", .0125 * canvasWidth, canvasHeight / 2 - 100, 0.015 * canvasHeight, 0.15 * canvasHeight, 0, 0, 0, true, 0);
 player2 = new player("Player 2", canvasWidth - .0125 * canvasWidth, canvasHeight / 2 - 100, 0.015 * canvasHeight, 0.15 * canvasHeight, 0, 0, 0, false, 0);
 
@@ -138,16 +137,12 @@ function drawPlayers() {
 function testGoal() {
     //if the ball goes off the screen to the right, player 1 scores
     if (ball.x + ball.radius > canvasWidth) {
-        ball.x = canvasWidth / 2;
-        ball.y = canvasHeight / 2;
-        ball.dx = -ball.dx;
+        respawnBall();
         player1.wins++;
     }
     //if the ball goes off the screen to the left, player 2 scores
     if (ball.x - ball.radius < 0) {
-        ball.x = canvasWidth / 2;
-        ball.y = canvasHeight / 2;
-        ball.dx = -ball.dx;
+        respawnBall();
         player2.wins++;
     }
 }
@@ -161,6 +156,20 @@ function testWin() {
     if (player2.wins === roundsToWin) {
         alert("Player 2 wins!");
         reset();
+    }
+}
+
+function respawnBall() {
+    //spawns ball at random y position with random x direction and random y direction at an angle between 30 and 150 degrees while maintaining a minimum speed of 1
+    ball.x = canvasWidth / 2;
+    ball.y = Math.random() * canvasHeight;
+    ball.dx = Math.random() /800 * canvasWidth /800 * canvasWidth;
+    ball.dy = Math.random() /600 * canvasHeight /600 * canvasHeight;
+    if (Math.random() > 0.5) {
+        ball.dx = -ball.dx;
+    }
+    if (Math.random() > 0.5) {
+        ball.dy = -ball.dy;
     }
 }
 
