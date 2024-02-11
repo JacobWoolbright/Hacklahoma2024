@@ -7,7 +7,8 @@ let canvasHeight = canvas.height;
 const roundsToWin = 100;
 
 let player1, player2;
-
+let DT = 0;
+let lastUpdate = Date.now();
 class player {
     get name() {
         return this._name;
@@ -79,6 +80,13 @@ function reset(){
     player1.y = canvasHeight / 2 - 100;
     player2.y = canvasHeight / 2 - 100;
 
+}
+
+function calculateDT(){
+    let now = Date.now(); // Get the current time
+    let dt = now - lastUpdate; // Subtract the last time from the current time to get the time difference
+    let lastUpdate = now;  // Set the last update time to the current time
+    return dt;
 }
 
 
@@ -198,8 +206,8 @@ function testWallCollide() {
 }
 
 function moveBall() {
-    ball.x += ball.dx;
-    ball.y += ball.dy;
+    ball.x += ball.dx * DT * 1;
+    ball.y += ball.dy * DT * 1;
 }
 
 function movePlayers() {
@@ -276,6 +284,7 @@ function playGameLoop() {
     // Clear the canvas
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
+
     //readData();
 
     moveBall();
@@ -295,8 +304,7 @@ function playGameLoop() {
     drawCenterLine();
     testGoal();
     testWin();
-
-
+    calculateDT();
 
     // Call the playGameLoop function again
     requestAnimationFrame(playGameLoop);
