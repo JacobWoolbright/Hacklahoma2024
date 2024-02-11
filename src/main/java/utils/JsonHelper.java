@@ -14,4 +14,10 @@ public class JsonHelper {
 
     }
 
+    public static String append(String key, boolean value) {
+
+        return "\"" + key + "\":\"" + value + "\",";
+
+    }
+
 }
