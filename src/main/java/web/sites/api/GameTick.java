@@ -3,25 +3,46 @@ package web.sites.api;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import game.player.Player;
+import game.player.PlayerManager;
 import game.session.Game;
 import game.session.GameManager;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.logging.Logger;
 
-public class JoinGame implements HttpHandler {
+public class GameTick implements HttpHandler {
 
-    Logger logger = Logger.getLogger("JoinGame");
+    Logger logger = Logger.getLogger("GameTick");
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
 
-        logger.info("dispatching JoinGame to " + exchange.getRemoteAddress());
+        logger.info("dispatching GameTick to " + exchange.getRemoteAddress());
 
         StringBuilder sb = new StringBuilder();
 
         Game game = GameManager.getGameFromShareCode(exchange.getRequestURI().toString().split("/")[3]);
+        Player player = PlayerManager.getPlayer(exchange.getRequestURI().toString().split("/")[4]);
+
+        StringBuilder InputSb = new StringBuilder();
+        InputStream ios = exchange.getRequestBody();
+
+        int i;
+        while ((i = ios.read()) != -1) {
+            InputSb.append((char) i);
+        }
+
+        JSONObject inputJson = new JSONObject(InputSb.toString());
+
+        if(player.isPrimaryPlayer()){
+
+        }
+        else{
+
+        }
 
         if(game == null || game.getPlayers()[1] != null){
             exchange.sendResponseHeaders(404, 0);

@@ -15,7 +15,7 @@ public class Game {
     public Game() {
 
         gameId = IdGenerator.generateGameId();
-        players[0] = new Player();
+        players[0] = new Player(this);
 
         GameManager.addGame(this);
     }
@@ -41,5 +41,9 @@ public class Game {
             return true;
         }
         return false;
+    }
+
+    public boolean isPrimaryPlayer(Player player) {
+        return players[0].equals(player);
     }
 }

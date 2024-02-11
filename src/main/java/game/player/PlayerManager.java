@@ -11,6 +11,10 @@ public class PlayerManager {
         return players.get(id);
     }
 
+    public static Player getPlayer(String id){
+        return players.get(UUID.fromString(id));
+    }
+
     public static void addPlayer(Player player){
         players.put(player.getPlayerID(), player);
     }
