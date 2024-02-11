@@ -48,8 +48,8 @@ setInterval(function() {
                 ball.y = data.ballY*canvasHeight;
                 ball.dx = data.dx*canvasWidth
                 ball.dy = data.dy*canvasHeight;
-                player1.setWins(data.secondaryPlayerScore);
-                player2.setWins(data.primaryPlayerScore);
+                player1.wins = data.secondaryPlayerScore;
+                player2.wins = data.primaryPlayerScore;
                 gameStarted = data.gameStarted;
             })
             .catch((error) => {
