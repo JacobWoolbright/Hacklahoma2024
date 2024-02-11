@@ -46,6 +46,8 @@ public class GameTick implements HttpHandler {
             game.setBallY(inputJson.getFloat("ballY"));
             game.setDx(inputJson.getFloat("dx"));
             game.setDy(inputJson.getFloat("dy"));
+            game.setPrimaryPlayerScore(inputJson.getInt("primaryPlayerScore"));
+            game.setSecondaryPlayerScore(inputJson.getInt("secondaryPlayerScore"));
             player.setPaddleY(inputJson.getFloat("paddleY"));
 
             if(inputJson.has("gameStarted")){
@@ -76,6 +78,10 @@ public class GameTick implements HttpHandler {
             outputSb.append(JsonHelper.append("dx", game.getDx()));
             outputSb.append(",");
             outputSb.append(JsonHelper.append("dy", game.getDy()));
+            outputSb.append(",");
+            outputSb.append(JsonHelper.append("primaryPlayerScore", game.getPrimaryPlayerScore()));
+            outputSb.append(",");
+            outputSb.append(JsonHelper.append("secondaryPlayerScore", game.getSecondaryPlayerScore()));
             outputSb.append(",");
             outputSb.append(JsonHelper.append("gameStarted", game.isGameStarted()));
             outputSb.append("}");

@@ -14,6 +14,7 @@ public class Game {
     private float ballX = 0, ballY = 0;
     private float dx, dy;
     private boolean gameStarted = false;
+    private int primaryPlayerScore = 0, secondaryPlayerScore = 0;
 
     public Game() {
 
@@ -88,5 +89,29 @@ public class Game {
 
     public void setGameStarted(boolean gameStarted) {
         this.gameStarted = gameStarted;
+    }
+
+    public void setGameShareCode(String gameShareCode) {
+        this.gameShareCode = gameShareCode;
+    }
+
+    public void setPlayers(Player[] players) {
+        this.players = players;
+    }
+
+    public int getPrimaryPlayerScore() {
+        return primaryPlayerScore;
+    }
+
+    public void setPrimaryPlayerScore(int primaryPlayerScore) {
+        this.primaryPlayerScore = primaryPlayerScore;
+    }
+
+    public int getSecondaryPlayerScore() {
+        return secondaryPlayerScore;
+    }
+
+    public void setSecondaryPlayerScore(int secondaryPlayerScore) {
+        this.secondaryPlayerScore = secondaryPlayerScore;
     }
 }
