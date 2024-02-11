@@ -58,6 +58,7 @@ class player {
 
 }
 
+
 player1 = new player("Player 1", .0125 * canvasWidth, canvasHeight / 2 - 100, 0.015 * canvasHeight, 0.15 * canvasHeight, 0, 0, 0, true, 0);
 player2 = new player("Player 2", canvasWidth - .0125 * canvasWidth, canvasHeight / 2 - 100, 0.015 * canvasHeight, 0.15 * canvasHeight, 0, 0, 0, false, 0);
 // Ball
@@ -98,8 +99,9 @@ function updatePlayer(location, y, player) {
 function gameLoop() {
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
-    player1.y += updatePlayer(player1.relativeY, player1.y,player1);
-    player2.y += updatePlayer(player2.relativeY, player2.y,player2);
+    // Update the paddle positions
+    player1.y += updatePlayer(player1.relativeY, player1.y, player1);
+    player2.y += updatePlayer(player2.relativeY, player2.y, player2);
 
     // Ensure paddle stays within canvas boundaries
     if (player1.y < 0) {
@@ -178,28 +180,22 @@ function gameLoop() {
         ball.x = canvasWidth / 2;
         ball.y = canvasHeight / 2;
         ball.dx = -ball.dx;
-        player2.wins++
+        player2.wins++;
     }
 
     if (player1.wins === roundsToWin) {
-            alert("Player 1 wins!");
-            reset();
-        }
+        alert("Player 1 wins!");
+        reset();
+    }
 
-    if
-        (player2.wins === roundsToWin) {
-            alert("Player 2 wins!");
-            reset();
-        }
+    if (player2.wins === roundsToWin) {
+        alert("Player 2 wins!");
+        reset();
+    }
 
-// Call the gameLoop function again
+    // Call the gameLoop function again
     requestAnimationFrame(gameLoop);
-
-
 }
 
-
-    requestAnimationFrame(gameLoop);{
-
-    gameLoop();
-}
+// Call the gameLoop function to start the game
+gameLoop();
