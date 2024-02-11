@@ -11,12 +11,12 @@ import java.util.logging.Logger;
 
 public class Api implements HttpHandler {
 
-    Logger logger = Logger.getLogger("dynamicSite");
+    Logger logger = Logger.getLogger("api");
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
 
-        logger.info("dispatching dynamic to " + exchange.getRemoteAddress());
+        logger.info("dispatching api to " + exchange.getRemoteAddress());
 
         StringBuilder sb = new StringBuilder();
 
