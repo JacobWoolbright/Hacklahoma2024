@@ -16,6 +16,8 @@ public class Player {
     public Player(Game game) {
         playerID = IdGenerator.generatePlayerId();
         this.game = game;
+
+        PlayerManager.addPlayer(this);
     }
 
     public UUID getPlayerID() {
@@ -42,5 +44,9 @@ public class Player {
 
     public void setPaddleY(int paddleY) {
         this.paddleY = paddleY;
+    }
+
+    public Game getGame() {
+        return game;
     }
 }

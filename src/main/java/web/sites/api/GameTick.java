@@ -25,8 +25,9 @@ public class GameTick implements HttpHandler {
 
         StringBuilder outputSb = new StringBuilder();
 
-        Game game = GameManager.getGameFromShareCode(exchange.getRequestURI().toString().split("/")[3]);
-        Player player = PlayerManager.getPlayer(exchange.getRequestURI().toString().split("/")[4]);
+        Player player = PlayerManager.getPlayer(exchange.getRequestURI().toString().split("/")[3]);
+        Game game = player.getGame();
+
 
         StringBuilder InputSb = new StringBuilder();
         InputStream ios = exchange.getRequestBody();
@@ -50,10 +51,15 @@ public class GameTick implements HttpHandler {
             }
 
             outputSb.append("{");
-            outputSb.append(JsonHelper.append("paddleY", game.getPlayers()[1].getPaddleY()));
+
+            if (game.getPlayers()[1] != null) {
+                outputSb.append(JsonHelper.append("paddleY", game.getPlayers()[1].getPaddleY()));
+            }
+
             outputSb.append("}");
         }
         else{
+            System.out.println("secondary player");
             player.setPaddleY(inputJson.getInt("paddleY"));
 
             outputSb.append("{");
@@ -65,6 +71,7 @@ public class GameTick implements HttpHandler {
             outputSb.append(JsonHelper.append("gameStarted", game.isGameStarted()));
             outputSb.append("}");
         }
+
 
         if(game == null || game.getPlayers()[1] != null){
             exchange.sendResponseHeaders(404, 0);
