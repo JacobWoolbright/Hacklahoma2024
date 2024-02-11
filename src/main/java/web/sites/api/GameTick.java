@@ -60,6 +60,8 @@ public class GameTick implements HttpHandler {
 
             outputSb.append("}");
 
+            System.out.println(outputSb.toString());
+
         }
         else{
             player.setPaddleY(inputJson.getFloat("paddleY"));
