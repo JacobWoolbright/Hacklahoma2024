@@ -72,8 +72,6 @@ public class GameTick implements HttpHandler {
             outputSb.append(JsonHelper.append("dy", game.getDy()));
             outputSb.append(JsonHelper.append("gameStarted", game.isGameStarted()));
             outputSb.append("}");
-
-            System.out.println(outputSb.toString());
         }
 
         String response = outputSb.toString();
