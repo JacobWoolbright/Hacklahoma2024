@@ -1,27 +1,55 @@
-let playerID;
+let playerID, isPrimaryPlayer, gameStarted = false;
 
 setInterval(function() {
-    let data = {
-        "ballX": (ball.x)/(canvasWidth),
-        "ballY": ball.y/canvasHeight,
-        "dx": ball.dx/canvasWidth,
-        "dy": ball.dy/canvasHeight,
-        "paddleY": player1.y/canvasHeight
-    };
+    if(isPrimaryPlayer){
+        let data = {
+            "ballX": (ball.x)/(canvasWidth),
+            "ballY": ball.y/canvasHeight,
+            "dx": ball.dx/canvasWidth,
+            "dy": ball.dy/canvasHeight,
+            "paddleY": player1.y/canvasHeight
+        };
 
-    fetch(`/api/gameTick/${playerID}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-        player2.relativeY = data.paddleY; // Set player2.y to the returned paddleY
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
+        fetch(`/api/gameTick/${playerID}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                player2.relativeY = data.paddleY; // Set player2.y to the returned paddleY
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+    else{
+        let data = {
+            "paddleY": player1.y/canvasHeight
+        };
+
+        fetch(`/api/gameTick/${playerID}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                player2.relativeY = data.paddleY;
+                ball.x = data.ballX;
+                ball.y = data.ballY;
+                ball.dx = data.dx;
+                ball.dy = data.dy;
+                gameStarted = data.gameStarted;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
 }, 50);
