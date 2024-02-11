@@ -11,8 +11,8 @@ public class Game {
     private String gameShareCode;
     private final UUID gameId;
     private Player[] players = new Player[2];
-    private int ballX = 0, ballY = 0;
-    private int dx, dy;
+    private float ballX = 0, ballY = 0;
+    private float dx, dy;
     private boolean gameStarted = false;
 
     public Game() {
@@ -50,23 +50,23 @@ public class Game {
         return players[0].equals(player);
     }
 
-    public int getBallX() {
+    public float getBallX() {
         return ballX;
     }
 
-    public void setBallX(int ballX) {
+    public void setBallX(float ballX) {
         this.ballX = ballX;
     }
 
-    public int getBallY() {
+    public float getBallY() {
         return ballY;
     }
 
-    public void setBallY(int ballY) {
+    public void setBallY(float ballY) {
         this.ballY = ballY;
     }
 
-    public int getDx() {
+    public float getDx() {
         return dx;
     }
 
@@ -74,7 +74,7 @@ public class Game {
         this.dx = dx;
     }
 
-    public int getDy() {
+    public float getDy() {
         return dy;
     }
 
