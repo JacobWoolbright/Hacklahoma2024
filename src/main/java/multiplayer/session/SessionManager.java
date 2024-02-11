@@ -1,15 +1,10 @@
 package multiplayer.session;
 
+import java.util.ArrayList;
+
 public class SessionManager {
 
-    private static SessionManager instance = new SessionManager();
+    private static ArrayList<Session> sessions = new ArrayList<>();
 
-    private SessionManager() {}
 
-    public static SessionManager getInstance() {
-        if (instance == null){
-            instance = new SessionManager();
-        }
-        return instance;
-    }
 }
