@@ -16,8 +16,6 @@ public class Api implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
 
-        String filename = exchange.getRequestURI().toString().substring(1);
-
         logger.info("dispatching dynamic to " + exchange.getRemoteAddress());
 
         StringBuilder sb = new StringBuilder();
