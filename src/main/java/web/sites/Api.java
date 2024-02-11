@@ -9,7 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.logging.Logger;
 
-public class HTML implements HttpHandler {
+public class Api implements HttpHandler {
 
     Logger logger = Logger.getLogger("dynamicSite");
 
@@ -22,13 +22,7 @@ public class HTML implements HttpHandler {
 
         StringBuilder sb = new StringBuilder();
 
-        try{
-            String content = new String(Files.readAllBytes(Paths.get("./html/" + filename)));
-            sb.append(content);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        sb.append("{'status':'online'}");
 
         String response = sb.toString();
 
