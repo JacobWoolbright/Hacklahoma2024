@@ -59,7 +59,6 @@ public class GameTick implements HttpHandler {
             outputSb.append("}");
         }
         else{
-            System.out.println("secondary player");
             player.setPaddleY(inputJson.getInt("paddleY"));
 
             outputSb.append("{");
@@ -70,17 +69,6 @@ public class GameTick implements HttpHandler {
             outputSb.append(JsonHelper.append("dy", game.getDy()));
             outputSb.append(JsonHelper.append("gameStarted", game.isGameStarted()));
             outputSb.append("}");
-        }
-
-
-        if(game == null || game.getPlayers()[1] != null){
-            exchange.sendResponseHeaders(404, 0);
-            return;
-        }
-
-        if(!game.addPlayer(new Player(game))){
-            exchange.sendResponseHeaders(404, 0);
-            return;
         }
 
         String response = outputSb.toString();
