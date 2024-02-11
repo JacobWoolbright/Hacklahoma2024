@@ -20,7 +20,7 @@
 </head>
 <body>
 
-    <video id="myVidPlayer" controls muted autoplay></video>
+    <video id="myVidPlayer" muted autoplay width="600" height="450"></video>
 
     <script type="text/javascript">
 
@@ -53,8 +53,8 @@
             // Call readPose every 5 seconds
             setInterval(function() {
                 readPose(document.getElementById("myVidPlayer"));
-            }, 50);
-        }, 10000);
+            }, 100);
+        }, 5000);
 
     </script>
 
