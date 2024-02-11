@@ -1,13 +1,18 @@
 package game.session;
 
+import utils.IdGenerator;
 import utils.ShareCodeGenerator;
+
+import java.util.UUID;
 
 public class Game {
 
-    public String gameShareCode;
+    private String gameShareCode;
+    private final UUID gameId;
 
     public Game() {
         GameManager.addGame(this);
+        gameId = IdGenerator.generateGameId();
     }
 
     public String getGameShareCode() {
@@ -15,5 +20,9 @@ public class Game {
             gameShareCode = ShareCodeGenerator.generateShareCode();
         }
         return gameShareCode;
+    }
+
+    public UUID getGameId() {
+        return gameId;
     }
 }
