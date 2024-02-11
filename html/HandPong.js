@@ -147,6 +147,7 @@ function testGoal() {
     }
 }
 
+
 function testWin() {
     if (player1.wins === roundsToWin) {
         alert("Player 1 wins!");
@@ -163,15 +164,17 @@ function respawnBall() {
     //spawns ball at random y position with random x direction and random y direction at an angle between 30 and 150 degrees with a speed between 1/600 and 1/400 of the canvas height
     ball.x = canvasWidth / 2;
     ball.y = Math.random() * canvasHeight;
-    ball.dx = Math.random() / 400 * canvasWidth;
-    ball.dy = Math.random() / 300 * canvasHeight;
-    if (ball.dx < .4 || ball.dy < .3) {
+    ball.dx = Math.random() / 400 * canvasWidth * (Math.random() < 0.5 ? 1 : -1);
+    ball.dy = Math.random() / 300 * canvasHeight * (Math.random() < 0.5 ? 1 : -1);
+
+    if(Math.abs(ball.dx) < 2 || Math.abs(ball.dx) > 3){
         respawnBall();
     }
-    if (ball.dx > .8 || ball.dy > .6) {
+    if(Math.abs(ball.dy) < .3 || Math.abs(ball.dy) > 1) {
         respawnBall();
     }
 }
+
 
 function testPlayerCollide() {
     if (ball.x - ball.radius <= player1.x + player1.width &&
@@ -215,8 +218,59 @@ function movePlayers() {
         player2.y = canvasHeight - player2.width;
     }
 }
+class menu{
+    constructor(title, instructions, startButton){
+        this.title = title;
+        this.instructions = instructions;
+        this.startButton = startButton;
+    }
 
-function gameLoop() {
+    //draws the title of the game
+    drawTitle(){
+        ctx.font = "50px Arial";
+        ctx.fillText(this.title, canvasWidth / 2 - 100, 100);
+    }
+
+    //draws the instructions of the game
+    drawInstructions(){
+        ctx.font = "20px Arial";
+        ctx.fillText(this.instructions, canvasWidth / 2 - 100, 200);
+    }
+
+    //draws the start button
+    drawStartButton(){
+        ctx.beginPath();
+        ctx.rect(this.startButton.x, this.startButton.y, this.startButton.width, this.startButton.height);
+        ctx.fillStyle = "#FFF";
+        ctx.fill();
+        ctx.closePath();
+    }
+
+
+    //tests if the start button is pressed
+    testStartButton(){
+        if (ball.x - ball.radius <= this.startButton.x + this.startButton.width &&
+            ball.y >= this.startButton.y &&
+            ball.y <= this.startButton.y + this.startButton.height) {
+            return true;
+        }
+    }
+
+}
+
+menu = new menu("Hand Pong", "Use your hand to control the paddles", {x: canvasWidth / 2 - 50, y: canvasHeight / 2, width: 100, height: 50});
+
+function menuGameLoop(){
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+    menu.drawTitle();
+    menu.drawInstructions();
+    menu.drawStartButton();
+    if(menu.testStartButton()){
+        playGameLoop();
+    }
+    requestAnimationFrame(menuGameLoop);
+}
+function playGameLoop() {
     // Clear the canvas
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
@@ -240,10 +294,12 @@ function gameLoop() {
     testGoal();
     testWin();
 
+    console.log("DX: " + ball.dx);
+    console.log("DY: " + ball.dy);
 
-    // Call the gameLoop function again
-    requestAnimationFrame(gameLoop);
+    // Call the playGameLoop function again
+    requestAnimationFrame(playGameLoop);
 }
 
-// Call the gameLoop function to start the game
-gameLoop();
+// Call the playGameLoop function to start the game
+playGameLoop();
