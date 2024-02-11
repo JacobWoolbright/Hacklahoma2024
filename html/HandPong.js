@@ -7,7 +7,7 @@ let canvasHeight = canvas.height;
 const roundsToWin = 100;
 
 let player1, player2;
-let DT = 0;
+let DT = 10;
 let lastUpdate = Date.now();
 class player {
     get name() {
