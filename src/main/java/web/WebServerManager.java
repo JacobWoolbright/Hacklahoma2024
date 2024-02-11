@@ -1,7 +1,7 @@
 package web;
 
 import com.sun.net.httpserver.HttpServer;
-import web.sites.HTML;
+import web.sites.Html;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -16,7 +16,9 @@ public class WebServerManager {
             throw new RuntimeException(e);
         }
 
-        server.createContext("/", new HTML());
+//        add file getter context
+        server.createContext("/", new Html());
+
 
         server.start();
     }
