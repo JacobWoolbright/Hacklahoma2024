@@ -5,56 +5,49 @@ const ctx = canvas.getContext("2d");
 let canvasWidth = canvas.width;
 let canvasHeight = canvas.height;
 const roundsToWin = 7;
+let mouseY = 0;
 
-let player = {
-    x : 1,
-    y : canvas.height / 2 - 100,
-    width : 0.15 * canvas.height,
-    height : canvas.height / 2 - paddleHeight / 2,
+var player = {
+    x : 0,
+    y : canvasHeight / 2 - 100,
+    width : 0.15 * canvasHeight,
+    height: 0.15 * canvasHeight,
     wins : 0,
-    name : "Player"
+    name : "Player",
+    integral: 0,
+    prevError: 0,
+    primary : true
 }
 
 // Ball
 let ball = {
-    x: canvas.width / 2,
-    y: canvas.height / 2,
-    radius: canvas.width / 100,
+    x: canvasWidth / 2,
+    y: canvasHeight / 2,
+    radius: canvasWidth / 100,
     dx: 2,
     dy: 2
 };
 
-// Paddles
-
-
-let score = {
-    left: 0,
-    right: 0
-}
 
 // PID controller constants
 let Kp = .02;
 let Ki = 0.00;
 let Kd = 0.05;
 
-let prevErrorRight = 0;
-let integralRight = 0;
-let prevErrorLeft = 0;
-let integralLeft = 0;
 
 function reset(){
-    score.left = 0;
-    score.right = 0;
+    player1.score = 0;
+    player2.score = 0;
 
 }
 
-function updatePlayer(targetY, currentY) {
+function updatePlayer(targetY, currentY, player) {
     let error = targetY - currentY;
-    integralRight += error;
-    let derivative = error - prevErrorRight;
-    prevErrorRight = error;
+    player.integral += error;
+    let derivative = error - player.prevError;
+    player.prevError = error;
 
-    return Kp * error + Ki * integralRight + Kd * derivative;
+    return Kp * error + Ki * player.integral + Kd * derivative;
 
 }
 
@@ -62,55 +55,57 @@ function updatePlayer(targetY, currentY) {
 canvas.addEventListener("mousemove", function(event) {
     let rect = canvas.getBoundingClientRect();
     var mouseY = event.clientY - rect.top;
-    player1.y = mouseY - paddleHeight / 2;
-    player2.y = mouseY - paddleHeight / 2;
+    player1.y = mouseY - player1.height / 2;
+    player2.y = mouseY - player2.height / 2;
+    moyseY = mouseY;
 });
 
 // Game loop
 
 let player1 = new Player();
 player1.name = "Player 1";
-player1.x = .0125 * canvas.width;
+player1.x = .0125 * canvasWidth;
+player1.primary = true;
+
 
 let player2 = new Player();
 player2.name = "Player 2";
-player2.x = canvas.width - paddleWidth - .0125 * canvas.width;
+player2.x = canvasWidth - player2.width - .0125 * canvasWidth;
 
 function gameLoop() {
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
-    // Move paddles
-    player1.y += updatePlayer(mouseY, player1.y);
-    player2.y += updatePlayer(mouseY, player2.y);
+    player1.y += updatePlayer(mouseY, player.y,player1);
+    player2.y += updatePlayer(mouseY, player.y,player2);
 
     // Ensure paddle stays within canvas boundaries
     if (player1.y < 0) {
         player1.y = 0;
-    } else if (player1.y + paddleHeight > canvasHeight) {
-        player1.y = canvasHeight - paddleHeight;
+    } else if (player1.y + player1.height > canvasHeight) {
+        player1.y = canvasHeight - player1.height
     }
 
     if (player2.y < 0) {
         player2.y = 0;
-    } else if (player2.y + paddleHeight > canvasHeight) {
-        player2.y = canvasHeight - paddleHeight;
+    } else if (player2.y + player2.height > canvasHeight) {
+        player2.y = canvasHeight - player2.width;
     }
 
     // Collision detection with walls
-    if (ball.y + ball.radius >= canvas.height || ball.y - ball.radius <= 0) {
+    if (ball.y + ball.radius >= canvasHeight || ball.y - ball.radius <= 0) {
         ball.dy = -ball.dy;
     }
 
     // Collision detection with paddles
-    if (ball.x - ball.radius <= player1.x + paddleWidth &&
+    if (ball.x - ball.radius <= player1.x + player1.width &&
         ball.y >= player1.y &&
-        ball.y <= player1.y + paddleHeight) {
+        ball.y <= player1.y + player1.height) {
         ball.dx = -ball.dx;
     }
     if (ball.x + ball.radius >= player2.x &&
         ball.y >= player2.y &&
-        ball.y <= player2.y + paddleHeight) {
+        ball.y <= player2.y + player2.width) {
         ball.dx = -ball.dx;
     }
 
@@ -120,8 +115,8 @@ function gameLoop() {
 
     // Draw paddles
     ctx.fillStyle = "#FFF";
-    ctx.fillRect(player1.x, player1.y, paddleWidth, paddleHeight);
-    ctx.fillRect(player2.x, player2.y, paddleWidth, paddleHeight);
+    ctx.fillRect(player1.x, player1.y, player1.width, player1.height);
+    ctx.fillRect(player2.x, player2.y, player2.width, player2.height);
 
     // Draw ball
     ctx.beginPath();
@@ -132,45 +127,45 @@ function gameLoop() {
 
     // Draw the score
     ctx.font = "30px Arial";
-    ctx.fillText(score.left, canvas.width / 2 - 50, canvas.height - 50);
-    ctx.fillText(score.right, canvas.width / 2 + 20, canvas.height - 50);
+    ctx.fillText(player1.wins, canvasWidth / 2 - 50, canvasHeight - 50);
+    ctx.fillText(player2.wins, canvasWidth / 2 + 20, canvasHeight - 50);
 
     // Draw the center line
     ctx.beginPath();
     ctx.setLineDash([10, 10]);
-    ctx.moveTo(canvas.width / 2, 0);
-    ctx.lineTo(canvas.width / 2, canvas.height);
+    ctx.moveTo(canvasWidth / 2, 0);
+    ctx.lineTo(canvasWidth / 2, canvasHeight);
     ctx.strokeStyle = "#FFF";
     ctx.stroke();
     ctx.closePath();
 
     // Draw the names
     ctx.font = "30px Arial";
-    ctx.fillText(names.left, 50, 50);
-    ctx.fillText(names.right, canvas.width - 200, 50);
+    ctx.fillText(player1.name, 50, 50);
+    ctx.fillText(player2.name, canvasWidth - 200, 50);
 
     //if the ball goes off the screen to the right, player 1 scores
-    if (ball.x + ball.radius > canvas.width) {
-        ball.x = canvas.width / 2;
-        ball.y = canvas.height / 2;
+    if (ball.x + ball.radius > canvasWidth) {
+        ball.x = canvasWidth / 2;
+        ball.y = canvasHeight / 2;
         ball.dx = -ball.dx;
-        score.left++;
+        player1.wins++;
     }
     //if the ball goes off the screen to the left, player 2 scores
     if (ball.x - ball.radius < 0) {
-        ball.x = canvas.width / 2;
-        ball.y = canvas.height / 2;
+        ball.x = canvasWidth / 2;
+        ball.y = canvasHeight / 2;
         ball.dx = -ball.dx;
-        score.right++;
+        player2.wins++
     }
 
-    if (score.left === roundsToWin) {
+    if (player1.wins === roundsToWin) {
             alert("Player 1 wins!");
             reset();
         }
 
     if
-        (score.right === roundsToWin) {
+        (player2.wins === roundsToWin) {
             alert("Player 2 wins!");
             reset();
         }
