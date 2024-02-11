@@ -1,10 +1,8 @@
 package web;
 
 import com.sun.net.httpserver.HttpServer;
-import web.sites.api.Api;
+import web.sites.api.*;
 import web.sites.Html;
-import web.sites.api.CreateGame;
-import web.sites.api.GetGameShareCode;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -26,7 +24,8 @@ public class WebServerManager {
         server.createContext("/api", new Api());
         server.createContext("/api/createGame", new CreateGame());
         server.createContext("/api/getGameShareCode/", new GetGameShareCode());
-        server.createContext("/api/joinGame/", new web.sites.api.JoinGame());
+        server.createContext("/api/joinGame/", new JoinGame());
+        server.createContext("/api/gameTick/", new GameTick());
 
 
         server.start();

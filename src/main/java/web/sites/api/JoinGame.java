@@ -28,7 +28,7 @@ public class JoinGame implements HttpHandler {
             return;
         }
 
-        if(!game.addPlayer(new Player())){
+        if(!game.addPlayer(new Player(game))){
             exchange.sendResponseHeaders(404, 0);
             return;
         }
