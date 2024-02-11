@@ -17,11 +17,62 @@
             border:white 3px solid;
         }
     </style>
+
+    <!-- Load TensorFlow.js -->
+    <script src="https://unpkg.com/@tensorflow/tfjs"></script>
+    <!-- Load Posenet -->
+    <script src="https://unpkg.com/@tensorflow-models/posenet"></script>
+    <script type="text/javascript">
+        posenet.load().then(function(net) {
+            // posenet model loaded
+        });
+    </script>
+
+    <script src="camera.js"></script>
+
 </head>
 <body>
 <!-- canvas that is 80% the width and 60% the height of the screen -->
 <canvas id="pongCanvas" width="1600" height="1200"></canvas>
-<script src="HandPong.js">
+<script src="HandPong.js"></script>
+
+<video id="myVidPlayer" autoplay muted width="1000" height="500"></video>
+
+<script type="text/javascript">
+
+    loadModel();
+
+    //Selector for your <video> element
+    const video = document.querySelector('#myVidPlayer');
+
+    //Core
+    window.navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+            video.srcObject = stream;
+            video.onloadedmetadata = (e) => {
+                video.play();
+            };
+        })
+        .catch( () => {
+            alert('You have give browser the permission to run Webcam and mic ;( ');
+        });
+
 </script>
+
+<script>
+
+    loadModel();
+
+
+    // Wait for 10 seconds before starting the interval
+    setTimeout(function() {
+        // Call readPose every 5 seconds
+        setInterval(function() {
+            readPose(document.getElementById("myVidPlayer"));
+        }, 1);
+    }, 5000);
+
+</script>
+
 </body>
 </html>

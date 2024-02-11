@@ -6,6 +6,8 @@ let canvasWidth = canvas.width;
 let canvasHeight = canvas.height;
 const roundsToWin = 100;
 
+let player1, player2;
+
 class player {
     get name() {
         return this._name;
@@ -294,8 +296,7 @@ function playGameLoop() {
     testGoal();
     testWin();
 
-    console.log("DX: " + ball.dx);
-    console.log("DY: " + ball.dy);
+
 
     // Call the playGameLoop function again
     requestAnimationFrame(playGameLoop);

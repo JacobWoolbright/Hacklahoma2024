@@ -34,7 +34,7 @@ async function readPose(imageElement) {
     upperBound = (leftEye + rightEye) / 2;
     lowerBound = upperBound + (sholderHeight-upperBound)*2.8;
 
-    ratio = (rightWrist - lowerBound) / (upperBound - lowerBound);
+    ratio = 1-((rightWrist - lowerBound) / (upperBound - lowerBound));
 
-    console.log(ratio);
+    player1.relativeY = ratio;
 }
