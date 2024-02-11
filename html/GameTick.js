@@ -50,8 +50,6 @@ setInterval(function() {
                 ball.dy = data.dy*canvasHeight;
                 player1.setWins(data.secondaryPlayerScore);
                 player2.setWins(data.primaryPlayerScore);
-                console.log("Ball x: " + data.ballX*canvasWidth);
-                console.log("Ball y: " + data.ballY*canvasHeight);
                 gameStarted = data.gameStarted;
             })
             .catch((error) => {
