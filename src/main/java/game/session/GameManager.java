@@ -11,4 +11,9 @@ public class GameManager {
     public static void addGame(Game game) {
         games.put(game.getGameId(), game);
     }
+
+    public static Game getGame(String gameId) {
+        UUID uuid = UUID.fromString(gameId);
+        return games.get(uuid);
+    }
 }
