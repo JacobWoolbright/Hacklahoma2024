@@ -22,6 +22,7 @@ public class WebServerManager {
 
 //        add api context
         server.createContext("/api", new Api());
+        server.createContext("/api/createGame", new web.sites.api.CreateGame());
 
 
         server.start();
