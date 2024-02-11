@@ -16,4 +16,17 @@ public class GameManager {
         UUID uuid = UUID.fromString(gameId);
         return games.get(uuid);
     }
+
+    public static Game getGame(UUID gameId) {
+        return games.get(gameId);
+    }
+
+    public static Game getGameFromShareCode(String shareCode) {
+        for (Map.Entry<UUID, Game> entry : games.entrySet()) {
+            if (entry.getValue().getGameShareCode().equals(shareCode)) {
+                return entry.getValue();
+            }
+        }
+        return null;
+    }
 }
