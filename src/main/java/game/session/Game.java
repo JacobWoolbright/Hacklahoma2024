@@ -1,5 +1,6 @@
 package game.session;
 
+import game.player.Player;
 import utils.IdGenerator;
 import utils.ShareCodeGenerator;
 
@@ -9,10 +10,12 @@ public class Game {
 
     private String gameShareCode;
     private final UUID gameId;
+    private Player[] players = new Player[2];
 
     public Game() {
 
         gameId = IdGenerator.generateGameId();
+        players[0] = new Player();
 
         GameManager.addGame(this);
     }
@@ -26,5 +29,9 @@ public class Game {
 
     public UUID getGameId() {
         return gameId;
+    }
+
+    public Player[] getPlayers() {
+        return players;
     }
 }
