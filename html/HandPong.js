@@ -68,8 +68,8 @@ let ball = {
     x: canvasWidth / 2,
     y: canvasHeight / 2,
     radius: canvasWidth / 100,
-    dx: 1/800 * canvasWidth,
-    dy: 1/600 * canvasHeight
+    dx: canvasWidth/800,
+    dy: canvasHeight/600
 
 };
 
