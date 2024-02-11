@@ -21,7 +21,7 @@ public class GameTick implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
 
-        logger.info("dispatching GameTick to " + exchange.getRemoteAddress());
+//        logger.info("dispatching GameTick to " + exchange.getRemoteAddress());
 
         StringBuilder outputSb = new StringBuilder();
 
@@ -29,15 +29,17 @@ public class GameTick implements HttpHandler {
         Game game = player.getGame();
 
 
-        StringBuilder InputSb = new StringBuilder();
+        StringBuilder inputSb = new StringBuilder();
         InputStream ios = exchange.getRequestBody();
 
         int i;
         while ((i = ios.read()) != -1) {
-            InputSb.append((char) i);
+            inputSb.append((char) i);
         }
 
-        JSONObject inputJson = new JSONObject(InputSb.toString());
+        System.out.println(inputSb.toString());
+
+        JSONObject inputJson = new JSONObject(inputSb.toString());
 
         if(player.isPrimaryPlayer()){
             game.setBallX(inputJson.getInt("ballX"));
@@ -53,13 +55,14 @@ public class GameTick implements HttpHandler {
             outputSb.append("{");
 
             if (game.getPlayers()[1] != null) {
-                outputSb.append(JsonHelper.append("paddleY", game.getPlayers()[1].getPaddleY()));
+                outputSb.append(JsonHelper.append("paddleY", game.getPlayers()[1].getPaddleY()).replace(",", ""));
             }
 
             outputSb.append("}");
+
         }
         else{
-            player.setPaddleY(inputJson.getInt("paddleY"));
+            player.setPaddleY(inputJson.getFloat("paddleY"));
 
             outputSb.append("{");
             outputSb.append(JsonHelper.append("paddleY", game.getPlayers()[0].getPaddleY()));
@@ -69,6 +72,8 @@ public class GameTick implements HttpHandler {
             outputSb.append(JsonHelper.append("dy", game.getDy()));
             outputSb.append(JsonHelper.append("gameStarted", game.isGameStarted()));
             outputSb.append("}");
+
+            System.out.println(outputSb.toString());
         }
 
         String response = outputSb.toString();

@@ -217,7 +217,7 @@ function movePlayers() {
     if (player2.y < 0) {
         player2.y = 0;
     } else if (player2.y + player2.height > canvasHeight) {
-        player2.y = canvasHeight - player2.width;
+        player2.y = canvasHeight - player2.height;
     }
 }
 class menu{

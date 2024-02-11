@@ -19,9 +19,9 @@ setInterval(function() {
     .then(response => response.json())
     .then(data => {
         console.log('Success:', data);
-        player2.y = data.paddleY; // Set player2.y to the returned paddleY
+        player2.relativeY = data.paddleY; // Set player2.y to the returned paddleY
     })
     .catch((error) => {
-        // console.error('Error:', error);
+        console.error('Error:', error);
     });
 }, 50);

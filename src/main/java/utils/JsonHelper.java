@@ -20,4 +20,10 @@ public class JsonHelper {
 
     }
 
+    public static String append(String key, float value) {
+
+        return "\"" + key + "\":\"" + value + "\",";
+
+    }
+
 }
