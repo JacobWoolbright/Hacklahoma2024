@@ -1,10 +1,8 @@
 package game.session;
 
+import java.util.ArrayList;
+
 public class GameManager {
-
-    private static GameManager instance;
-
-
-
+    private static ArrayList<Game> games = new ArrayList<>();
 
 }
