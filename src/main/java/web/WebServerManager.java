@@ -1,7 +1,7 @@
 package web;
 
 import com.sun.net.httpserver.HttpServer;
-import web.sites.Api;
+import web.sites.api.Api;
 import web.sites.Html;
 
 import java.io.IOException;
