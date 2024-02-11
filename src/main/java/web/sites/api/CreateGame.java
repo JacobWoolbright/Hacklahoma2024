@@ -22,8 +22,8 @@ public class CreateGame implements HttpHandler {
         Game game = new Game();
 
         sb.append("{");
-        sb.append("'gameId':'" + game.getGameId() + "'");
-        sb.append("'playerId':'" + game.getPlayers()[0] + "'");
+        sb.append("\"gameId\":\"" + game.getGameId() + "\",");
+        sb.append("\"playerId\":\"" + game.getPlayers()[0] + "\"");
         sb.append("}");
 
         String response = sb.toString();
