@@ -46,6 +46,8 @@ setInterval(function() {
                 ball.y = data.ballY*canvasHeight;
                 ball.dx = data.dx*canvasWidth
                 ball.dy = data.dy*canvasHeight;
+                console.log("Ball x: " + data.ballX*canvasWidth);
+                console.log("Ball y: " + data.ballY*canvasHeight);
                 gameStarted = data.gameStarted;
             })
             .catch((error) => {
