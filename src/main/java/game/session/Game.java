@@ -11,8 +11,10 @@ public class Game {
     private final UUID gameId;
 
     public Game() {
-        GameManager.addGame(this);
+
         gameId = IdGenerator.generateGameId();
+
+        GameManager.addGame(this);
     }
 
     public String getGameShareCode() {
