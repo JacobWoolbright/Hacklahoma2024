@@ -42,11 +42,11 @@ public class GameTick implements HttpHandler {
         JSONObject inputJson = new JSONObject(inputSb.toString());
 
         if(player.isPrimaryPlayer()){
-            game.setBallX(inputJson.getInt("ballX"));
-            game.setBallY(inputJson.getInt("ballY"));
-            game.setDx(inputJson.getInt("dx"));
-            game.setDy(inputJson.getInt("dy"));
-            player.setPaddleY(inputJson.getInt("paddleY"));
+            game.setBallX(inputJson.getFloat("ballX"));
+            game.setBallY(inputJson.getFloat("ballY"));
+            game.setDx(inputJson.getFloat("dx"));
+            game.setDy(inputJson.getFloat("dy"));
+            player.setPaddleY(inputJson.getFloat("paddleY"));
 
             if(inputJson.has("gameStarted")){
                 game.setGameStarted(inputJson.getBoolean("gameStarted"));

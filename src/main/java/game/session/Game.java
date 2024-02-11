@@ -70,7 +70,7 @@ public class Game {
         return dx;
     }
 
-    public void setDx(int dx) {
+    public void setDx(float dx) {
         this.dx = dx;
     }
 
@@ -78,7 +78,7 @@ public class Game {
         return dy;
     }
 
-    public void setDy(int dy) {
+    public void setDy(float dy) {
         this.dy = dy;
     }
 
