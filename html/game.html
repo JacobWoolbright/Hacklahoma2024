@@ -2,61 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Name</title>
-
-    <!-- Load TensorFlow.js -->
-    <script src="https://unpkg.com/@tensorflow/tfjs"></script>
-    <!-- Load Posenet -->
-    <script src="https://unpkg.com/@tensorflow-models/posenet">
-    </script>
-    <script type="text/javascript">
-        posenet.load().then(function(net) {
-            // posenet model loaded
-        });
-    </script>
-
-    <script src="camera.js"></script>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong Game</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+        }
+        canvas {
+            display: block;
+            margin: auto;
+            background: #000;
+            border:white 3px solid;
+        }
+    </style>
 </head>
 <body>
-
-    <video id="myVidPlayer" controls muted autoplay></video>
-
-    <script type="text/javascript">
-
-        loadModel();
-
-        //Selector for your <video> element
-        const video = document.querySelector('#myVidPlayer');
-
-        //Core
-        window.navigator.mediaDevices.getUserMedia({ video: true })
-            .then(stream => {
-                video.srcObject = stream;
-                video.onloadedmetadata = (e) => {
-                    video.play();
-                };
-            })
-            .catch( () => {
-                alert('You have give browser the permission to run Webcam and mic ;( ');
-            });
-
-    </script>
-
-    <script>
-
-        loadModel();
-
-
-        // Wait for 10 seconds before starting the interval
-        setTimeout(function() {
-            // Call readPose every 5 seconds
-            setInterval(function() {
-                readPose(document.getElementById("myVidPlayer"));
-            }, 50);
-        }, 10000);
-
-    </script>
-
+<!-- canvas that is 80% the width and 60% the height of the screen -->
+<canvas id="pongCanvas" width="1600" height="1200"></canvas>
+<script src="HandPong.js">
+</script>
 </body>
 </html>
