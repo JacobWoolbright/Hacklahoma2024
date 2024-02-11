@@ -2,11 +2,11 @@ let playerID;
 
 setInterval(function() {
     let data = {
-        "ballX": ball.x,
-        "ballY": ball.y,
-        "dx": ball.dx,
-        "dy": ball.dy,
-        "paddleY": player1.y
+        "ballX": (ball.x)/(canvasWidth),
+        "ballY": ball.y/canvasHeight,
+        "dx": ball.dx/canvasWidth,
+        "dy": ball.dy/canvasHeight,
+        "paddleY": player1.y/canvasHeight
     };
 
     fetch(`/api/gameTick/${playerID}`, {
