@@ -186,7 +186,7 @@ function testPlayerCollide() {
     }
     if (ball.x + ball.radius >= player2.x &&
         ball.y >= player2.y &&
-        ball.y <= player2.y + player2.width) {
+        ball.y <= player2.y + player2.height) {
         ball.dx = -ball.dx;
     }
 }
